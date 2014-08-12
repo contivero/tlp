@@ -1,0 +1,87 @@
+Ejercicio 1
+‾‾‾‾‾‾‾‾‾‾‾
+1 y 2)
+
+1. ux(yz)(λv.vy)
+   ((ux)(yz))(λv.(vy))
+
+   Ligadas: v
+   Libres: resto
+
+2. (λx: σ → τ → ρ.λy: σ → τ.λz: σ.xz(yz))uvw
+   (((λx: σ → τ → ρ.(λy: σ → τ.(λz: σ.((xz)(yz))))) u) v)w
+
+   Ligadas: x, y, z
+   Libres: u, v, w
+
+3. w(λx: σ → τ → ρ.λy: σ → τ.λz: σ.xz(yz))uv
+   ((w(λx: σ → τ → ρ.(λy: σ → τ.(λz: σ.((xz)(yz))))))u)v
+
+   Ligadas: x, y, z
+   Libres: w, u, v
+
+3) En el segundo término ocurre (λx : σ → (τ → ρ).λy : σ → τ.λz : σ.xz(yz))u
+
+4) El primer y tercer término estan en forma normal
+
+5) No, en x(yz) se aplica el término 'y' al término 'z', y al resultado
+   de eso se aplica x, mientras que ux(yz) equivale a (ux)(yz), por lo que
+   x no se aplica a lo que evalua (yz), sino que se aplica lo que evalue
+   (ux) a (yz)
+
+Ejercicio 2
+‾‾‾‾‾‾‾‾‾‾‾
+if (λx:Bool.x) then true else false
+
+Ejercicio 3
+‾‾‾‾‾‾‾‾‾‾‾
+TODO
+
+1. (λy : σ.x(λx : τ.x)){x ← (λy : ρ.xy)}
+
+2. (y(λv : σ.xv)){x ← (λy : τ.vy)}
+
+Ejercicio 5
+‾‾‾‾‾‾‾‾‾‾‾
+1. (λx : Bool.λy : Bool → Bool.yx) true(λx : Bool.x)
+   (λy : Bool → Bool.y true) (λx : Bool.x)
+   (λx : Bool.x) true
+   true
+
+2. (λx : Bool.λy : Bool → Bool.y(yx)) false(λx : Bool.x)
+   (λy : Bool → Bool.y(y false)) (λx : Bool.x)
+   (λx : Bool.x)((λx : Bool.x) false)
+   (λx : Bool.x) false
+   false
+
+3. (λx : Bool.λy : Bool → Bool.y(yx)) ((λz : Bool.true)false)(λx : Bool.x)
+   (λx : Bool.λy : Bool → Bool.y(yx)) true (λx : Bool.x)
+   (λy : Bool → Bool.y(y true)) (λx : Bool.x)
+   (λx : Bool.x)((λx : Bool.x) true)
+   (λx : Bool.x) true
+   true
+
+4. (λx : Bool → Bool → Bool.λy : Bool → Bool.λz : Bool.xz(yz)) (λs : Bool.λt : Bool.s) (λu : Bool.u)w
+   (λy : Bool → Bool.λz : Bool.(λs : Bool.λt : Bool.s)z(yz)) (λu : Bool.u)w
+   (λz : Bool.(λs : Bool.λt : Bool.s)z((λu : Bool.u)z)) w
+   (λs : Bool.λt : Bool.s) w ((λu : Bool.u) w)
+   (λt : Bool.w) ((λu : Bool.u) w)
+   (λt : Bool.w) w
+
+¿Qué pasaría si en el punto 4 dijese true o false en lugar de w?
+-> terminaría en true o false.
+
+Ejercicio 6
+‾‾‾‾‾‾‾‾‾‾‾
+No, podría ser D = P, o D = Q, siendo P o Q, true o false.
+
+Ejercicio 7
+‾‾‾‾‾‾‾‾‾‾‾
+1. No, por ejemplo:
+   suc(pred(0)) = suc(0) = 1
+   pred(suc(0)) = 0
+
+2.
+
+3. Para los M ∈ {0, suc(0)}
+
