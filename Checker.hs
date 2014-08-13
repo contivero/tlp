@@ -1,9 +1,7 @@
--- Cómo uso el context? Todos los ejemplos uso la lista vacia...
--- Y cómo hago un ejemplo de un Abs que no devuelva una constante,
--- por ejemplo un Abs de aplicación al estilo \x -> if x then true else false
 type Context = [(Char, Type)]
 data Term = Tru
           | Fls
+          | Var Char
           | If Term Term Term
           | App Term Term
           | Abs Char Type Term
@@ -42,6 +40,12 @@ tcheck g (Abs c tp tm) =
                                            else Nothing
                          _ -> Nothing
        _ -> Nothing
+tcheck g (Var c) = lkup g c
+  where lkup :: Context -> Char -> Maybe Type
+        lkup [] _ = Nothing
+        lkup (x:xs) c = if (fst x) == c
+                           then Just (snd x)
+                           else lkup xs c
 
 example0 = tcheck [] Tru
 example1 = tcheck [] (App Tru Tru)
@@ -49,3 +53,4 @@ example2 = tcheck [] (If Tru Fls Tru)
 example3 = tcheck [] (Abs 'x' (Arrow (Arrow BoolT BoolT) BoolT) Tru)
 example4 = tcheck [] (App (Abs 'x' (Arrow BoolT BoolT) Tru) Fls)
 example5 = tcheck [] (If (Abs 'c' (Arrow BoolT BoolT) Tru) Tru Fls)
+example6 = tcheck [('x', BoolT)] (App (Abs 'x' (Arrow BoolT BoolT) (If (Var 'x') Tru Fls)) Tru)
