@@ -71,9 +71,17 @@ Ejercicio 5
 ¿Qué pasaría si en el punto 4 dijese true o false en lugar de w?
 -> terminaría en true o false.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+---------------------------- Consultar para abajo ----------------------------
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 Ejercicio 6
 ‾‾‾‾‾‾‾‾‾‾‾
-No, podría ser D = P, o D = Q, siendo P o Q, true o false.
+1. No, podría ser D = P, o D = Q, siendo P o Q, true o false.
+
+2. No, podría ser que M termine en algo no tipable (o no Bool), de forma que
+la condición del if no pueda reducirse, por lo que no se llegaría nunca a
+P' y Q'
 
 Ejercicio 7
 ‾‾‾‾‾‾‾‾‾‾‾
@@ -81,7 +89,36 @@ Ejercicio 7
    suc(pred(0)) = suc(0) = 1
    pred(suc(0)) = 0
 
-2.
+2. No, por ejemplo isZero(suc(True))
+   Vale para todo M = 0 | suc(M)
 
 3. Para los M ∈ {0, suc(0)}
 
+Ejercicio 8
+‾‾‾‾‾‾‾‾‾‾‾
+
+Ejercicio 10
+‾‾‾‾‾‾‾‾‾‾‾‾
+1.
+
+Ejercicio 11
+‾‾‾‾‾‾‾‾‾‾‾‾
+
+Ejercicio 12
+‾‾‾‾‾‾‾‾‾‾‾‾
+?????????????????
+Not Term
+And Term Term
+Or Term Term
+Xor Term Term
+
+Ejercicio 17
+‾‾‾‾‾‾‾‾‾‾‾‾
+1.
+         ✓
+    ------------[T-Var]
+    Γ ⊳ x : Bool        Γ ⊳ x : Bool        Γ ⊳ y : Bool
+    ---------------------------------------------------- [T-If]
+    Γ = {x : Bool, y : Bool} ⊳ if x then x else y : Bool
+
+2. {x : Bool → Bool, y : Bool} ⊳  if xy then y else xy : Bool

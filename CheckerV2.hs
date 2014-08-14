@@ -26,13 +26,13 @@ tcheck g (If p a b) = do BoolT <- tcheck g p
                             then return t1
                             else fail "Nothing"
 tcheck g (App t1 t2) = do Arrow s t <- tcheck g t1
-                          e1        <- tcheck g t2
-                          if e1 == s
+                          e         <- tcheck g t2
+                          if e == s
                              then return t
                              else Nothing
-tcheck g (Abs c tp tm) = do Arrow s t <- return tp
-                            t1        <- tcheck g tm
-                            if t == t1
+tcheck g (Abs c tp tm) = do Arrow s t1 <- return tp
+                            t2         <- tcheck g tm
+                            if t1 == t2
                                then return tp
                                else Nothing
 
