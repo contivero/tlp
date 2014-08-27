@@ -43,6 +43,8 @@ TODO
 
 Ejercicio 5
 ‾‾‾‾‾‾‾‾‾‾‾
+We use call-by-value !
+
 1. (λx : Bool.λy : Bool → Bool.yx) true(λx : Bool.x)
    (λy : Bool → Bool.y true) (λx : Bool.x)
    (λx : Bool.x) true
@@ -79,9 +81,7 @@ Ejercicio 6
 ‾‾‾‾‾‾‾‾‾‾‾
 1. No, podría ser D = P, o D = Q, siendo P o Q, true o false.
 
-2. No, podría ser que M termine en algo no tipable (o no Bool), de forma que
-la condición del if no pueda reducirse, por lo que no se llegaría nunca a
-P' y Q'
+2. No, nunca reduce P y Q antes de evaluar M.
 
 Ejercicio 7
 ‾‾‾‾‾‾‾‾‾‾‾
@@ -99,7 +99,7 @@ Ejercicio 8
 
 Ejercicio 10
 ‾‾‾‾‾‾‾‾‾‾‾‾
-1.
+1. ((λx : Bool.x) true) → true
 
 Ejercicio 11
 ‾‾‾‾‾‾‾‾‾‾‾‾
@@ -107,18 +107,81 @@ Ejercicio 11
 Ejercicio 12
 ‾‾‾‾‾‾‾‾‾‾‾‾
 ?????????????????
-Not Term
-And Term Term
-Or Term Term
-Xor Term Term
+not = x:Bool. if x then false else true
+
+Ejercicio 13
+‾‾‾‾‾‾‾‾‾‾‾‾
+
+Ejercicio 14
+‾‾‾‾‾‾‾‾‾‾‾‾
+application and let change only
+
+Ejercicio 15
+‾‾‾‾‾‾‾‾‾‾‾‾
+
+Ejercicio 16
+‾‾‾‾‾‾‾‾‾‾‾‾
+Probablemente necesito las reglas de los ejercicios anteriores para poder
+definir si esta en forma normal o no!
+1. (λx : Bool.λy : Bool → Bool.yx) true(λx : Bool.x)
+
+2. (λx : Bool.λy : Bool → Bool.y(yx)) false(λx : Bool.x)
+
+3. (λx : Bool.λy : Bool → Bool.y(yx)) ((λz : Bool.true)false)(λx : Bool.x)
+
+4. (λx : Bool → Bool → Bool.λy : Bool → Bool.λz : Bool.xz(yz)) (λs : Bool.λt : Bool.s) (λu : Bool.u)w
 
 Ejercicio 17
 ‾‾‾‾‾‾‾‾‾‾‾‾
 1.
-         ✓
-    ------------[T-Var]
-    Γ ⊳ x : Bool        Γ ⊳ x : Bool        Γ ⊳ y : Bool
-    ---------------------------------------------------- [T-If]
-    Γ = {x : Bool, y : Bool} ⊳ if x then x else y : Bool
+     ✓
+------------[T-Var]
+Γ ⊳ x : Bool        Γ ⊳ x : Bool        Γ ⊳ y : Bool
+---------------------------------------------------- [T-If]
+Γ = {x : Bool, y : Bool} ⊳ if x then x else y : Bool
 
-2. {x : Bool → Bool, y : Bool} ⊳  if xy then y else xy : Bool
+2.
+      ✓                          ✓
+-------------------[T-Var] ------------[T-Var]
+Γ ⊳ x : Bool → Bool        Γ ⊳ y : Bool
+---------------------------------------[T-App]
+Γ ⊳ xy : Bool                              Γ ⊳ y : Bool      Γ ⊳ xy : Bool
+--------------------------------------------------------------------------[T-If]
+    Γ = {x : Bool → Bool, y : Bool} ⊳  if xy then y else xy : Bool
+
+
+Ejercicio 18
+‾‾‾‾‾‾‾‾‾‾‾‾
+1.
+        ✓                     ✓                   ✓
+-----------------[T-Var]  ---------[T-Var]  -------------[T-Var]
+Γ ⊳ x : σ → τ → ρ         Γ ⊳ z : σ         Γ ⊳ y : σ → τ      Γ ⊳ z : σ
+-----------------------------------[T-App]  ----------------------------[T-App]
+Γ ⊳ xz : τ → ρ                              Γ ⊳ yz : τ
+------------------------------------------------------[T-App]
+Γ = {x : σ → τ → ρ, y : σ → τ, z : σ} ⊳ xz(yz)
+---------------------------------------------[T-Abs]
+{x : σ → τ → ρ, y : σ → τ} ⊳ λz : σ.xz(yz)
+---------------------------------------------[T-Abs]
+{x : σ → τ → ρ} ⊳ λy : σ → τ.λz : σ.xz(yz)
+---------------------------------------------[T-Abs]
+⊳ λx : σ → τ → ρ.λy : σ → τ.λz : σ.xz(yz)
+
+2.
+         ✓
+------------------[T-Var]
+{x : σ, y : τ} ⊳ x
+------------------[T-Abs]
+{x : σ} ⊳ λy : τ.x
+------------------[T-Abs]
+⊳ λx : σ.λy : τ.x
+
+3.
+     ✓
+-----------[T-Var]
+{x : σ} ⊳ x
+------------------[T-Abs]
+⊳ λx : σ.x
+
+Ejercicio 19
+‾‾‾‾‾‾‾‾‾‾‾‾

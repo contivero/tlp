@@ -1,3 +1,4 @@
+-- Simple lambda calculus type checker
 type Context = [(Char, Type)]
 data Term = Tru
           | Fls
@@ -7,8 +8,8 @@ data Term = Tru
           | Abs Char Type Term
   deriving (Eq, Show)
 
-data Type = Arrow Type Type
-          | BoolT
+data Type = BoolT
+          | Arrow Type Type
   deriving (Eq, Show)
 
 tcheck :: Context -> Term -> Maybe Type
