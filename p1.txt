@@ -1,6 +1,4 @@
-Ejercicio 1
-‾‾‾‾‾‾‾‾‾‾‾
-1 y 2)
+####Ejercicio 1
 
 1. ux(yz)(λv.vy)
    ((ux)(yz))(λv.(vy))
@@ -29,20 +27,17 @@ Ejercicio 1
    x no se aplica a lo que evalua (yz), sino que se aplica lo que evalue
    (ux) a (yz)
 
-Ejercicio 2
-‾‾‾‾‾‾‾‾‾‾‾
+####Ejercicio 2
 if (λx:Bool.x) then true else false
 
-Ejercicio 3
-‾‾‾‾‾‾‾‾‾‾‾
+####Ejercicio 3
 TODO
 
 1. (λy : σ.x(λx : τ.x)){x ← (λy : ρ.xy)}
 
 2. (y(λv : σ.xv)){x ← (λy : τ.vy)}
 
-Ejercicio 5
-‾‾‾‾‾‾‾‾‾‾‾
+####Ejercicio 5
 We use call-by-value !
 
 1. (λx : Bool.λy : Bool → Bool.yx) true(λx : Bool.x)
@@ -77,14 +72,12 @@ We use call-by-value !
 ---------------------------- Consultar para abajo ----------------------------
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Ejercicio 6
-‾‾‾‾‾‾‾‾‾‾‾
+####Ejercicio 6
 1. No, podría ser D = P, o D = Q, siendo P o Q, true o false.
 
 2. No, nunca reduce P y Q antes de evaluar M.
 
-Ejercicio 7
-‾‾‾‾‾‾‾‾‾‾‾
+####Ejercicio 7
 1. No, por ejemplo:
    suc(pred(0)) = suc(0) = 1
    pred(suc(0)) = 0
@@ -94,33 +87,34 @@ Ejercicio 7
 
 3. Para los M ∈ {0, suc(0)}
 
-Ejercicio 8
-‾‾‾‾‾‾‾‾‾‾‾
+####Ejercicio 8
+λx.if iszero(pred(pred(pred x)))
+      then (if iszero(pred(pred x)) then false else true)
+      else true
 
-Ejercicio 10
-‾‾‾‾‾‾‾‾‾‾‾‾
-1. ((λx : Bool.x) true) → true
+####Ejercicio 9
 
-Ejercicio 11
-‾‾‾‾‾‾‾‾‾‾‾‾
+####Ejercicio 10
 
-Ejercicio 12
-‾‾‾‾‾‾‾‾‾‾‾‾
-?????????????????
-not = x:Bool. if x then false else true
+####Ejercicio 11
+TODO: PREGUNTAR
 
-Ejercicio 13
-‾‾‾‾‾‾‾‾‾‾‾‾
+####Ejercicio 12
+```
+not = λx : Bool. if x then false else true
+and = λx : Bool.λy : Bool. if x then (if y then true else false) else false
+or  = λx : Bool.λy : Bool. if x then true else (if y then true else false)
+xor = λx : Bool.λy : Bool. if x then (if y then false else true) else y
+```
 
-Ejercicio 14
-‾‾‾‾‾‾‾‾‾‾‾‾
+####Ejercicio 13
+
+####Ejercicio 14
 application and let change only
 
-Ejercicio 15
-‾‾‾‾‾‾‾‾‾‾‾‾
+####Ejercicio 15
 
-Ejercicio 16
-‾‾‾‾‾‾‾‾‾‾‾‾
+####Ejercicio 16
 Probablemente necesito las reglas de los ejercicios anteriores para poder
 definir si esta en forma normal o no!
 1. (λx : Bool.λy : Bool → Bool.yx) true(λx : Bool.x)
@@ -131,8 +125,7 @@ definir si esta en forma normal o no!
 
 4. (λx : Bool → Bool → Bool.λy : Bool → Bool.λz : Bool.xz(yz)) (λs : Bool.λt : Bool.s) (λu : Bool.u)w
 
-Ejercicio 17
-‾‾‾‾‾‾‾‾‾‾‾‾
+####Ejercicio 17
 1.
      ✓
 ------------[T-Var]
@@ -150,8 +143,7 @@ Ejercicio 17
     Γ = {x : Bool → Bool, y : Bool} ⊳  if xy then y else xy : Bool
 
 
-Ejercicio 18
-‾‾‾‾‾‾‾‾‾‾‾‾
+####Ejercicio 18
 1.
         ✓                     ✓                   ✓
 -----------------[T-Var]  ---------[T-Var]  -------------[T-Var]
@@ -183,5 +175,32 @@ Ejercicio 18
 ------------------[T-Abs]
 ⊳ λx : σ.x
 
-Ejercicio 19
-‾‾‾‾‾‾‾‾‾‾‾‾
+####Ejercicio 19
+σ : Nat → Nat
+τ : Nat
+
+####Ejercicio 20
+1. {x : Bool} ⊳ x : Bool
+   {x : Nat}  ⊳ x : Nat
+2.
+
+####Ejercicio 21
+####Ejercicio 22
+####Ejercicio 23
+1. Falso
+   Γ . M : Bool y Γ . N : Bool, pero no entonces existe τ tal que Γ . M N: τ
+   M no es una función, no se puede aplicar a nada.
+2. Verdadero, basta con tomar σ = τ.
+
+####Ejercicio 24
+apply = λf : σ → σ.λx : σ. f x
+
+Γ ⊳ n : Nat      Γ ⊳ m : Nat
+----------------------------
+    Γ ⊳ mult n m : Nat
+
+####Ejercicio 25
+####Ejercicio 26
+####Ejercicio 27
+####Ejercicio 28
+####Ejercicio 29
