@@ -127,13 +127,15 @@ definir si esta en forma normal o no!
 
 ####Ejercicio 17
 1.
+```
      ✓
 ------------[T-Var]
 Γ ⊳ x : Bool        Γ ⊳ x : Bool        Γ ⊳ y : Bool
 ---------------------------------------------------- [T-If]
 Γ = {x : Bool, y : Bool} ⊳ if x then x else y : Bool
-
+```
 2.
+```
       ✓                          ✓
 -------------------[T-Var] ------------[T-Var]
 Γ ⊳ x : Bool → Bool        Γ ⊳ y : Bool
@@ -141,10 +143,10 @@ definir si esta en forma normal o no!
 Γ ⊳ xy : Bool                              Γ ⊳ y : Bool      Γ ⊳ xy : Bool
 --------------------------------------------------------------------------[T-If]
     Γ = {x : Bool → Bool, y : Bool} ⊳  if xy then y else xy : Bool
-
-
+```
 ####Ejercicio 18
 1.
+```
         ✓                     ✓                   ✓
 -----------------[T-Var]  ---------[T-Var]  -------------[T-Var]
 Γ ⊳ x : σ → τ → ρ         Γ ⊳ z : σ         Γ ⊳ y : σ → τ      Γ ⊳ z : σ
@@ -158,8 +160,9 @@ definir si esta en forma normal o no!
 {x : σ → τ → ρ} ⊳ λy : σ → τ.λz : σ.xz(yz)
 ---------------------------------------------[T-Abs]
 ⊳ λx : σ → τ → ρ.λy : σ → τ.λz : σ.xz(yz)
-
+```
 2.
+```
          ✓
 ------------------[T-Var]
 {x : σ, y : τ} ⊳ x
@@ -167,13 +170,15 @@ definir si esta en forma normal o no!
 {x : σ} ⊳ λy : τ.x
 ------------------[T-Abs]
 ⊳ λx : σ.λy : τ.x
-
+```
 3.
+```
      ✓
 -----------[T-Var]
 {x : σ} ⊳ x
 ------------------[T-Abs]
 ⊳ λx : σ.x
+```
 
 ####Ejercicio 19
 σ : Nat → Nat
@@ -193,11 +198,13 @@ definir si esta en forma normal o no!
 2. Verdadero, basta con tomar σ = τ.
 
 ####Ejercicio 24
+```
 apply = λf : σ → σ.λx : σ. f x
 
 Γ ⊳ n : Nat      Γ ⊳ m : Nat
 ----------------------------
     Γ ⊳ mult n m : Nat
+```
 
 ####Ejercicio 25
 ####Ejercicio 26
