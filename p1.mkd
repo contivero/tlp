@@ -40,37 +40,45 @@ TODO
 ####Ejercicio 5
 We use call-by-value !
 
-1. (λx : Bool.λy : Bool → Bool.yx) true(λx : Bool.x)
-   (λy : Bool → Bool.y true) (λx : Bool.x)
-   (λx : Bool.x) true
-   true
+1.
+```
+(λx : Bool.λy : Bool → Bool.yx) true(λx : Bool.x)
+(λy : Bool → Bool.y true) (λx : Bool.x)
+(λx : Bool.x) true
+true
+```
 
-2. (λx : Bool.λy : Bool → Bool.y(yx)) false(λx : Bool.x)
-   (λy : Bool → Bool.y(y false)) (λx : Bool.x)
-   (λx : Bool.x)((λx : Bool.x) false)
-   (λx : Bool.x) false
-   false
+2.
+```
+(λx : Bool.λy : Bool → Bool.y(yx)) false(λx : Bool.x)
+(λy : Bool → Bool.y(y false)) (λx : Bool.x)
+(λx : Bool.x)((λx : Bool.x) false)
+(λx : Bool.x) false
+false
+```
 
-3. (λx : Bool.λy : Bool → Bool.y(yx)) ((λz : Bool.true)false)(λx : Bool.x)
-   (λx : Bool.λy : Bool → Bool.y(yx)) true (λx : Bool.x)
-   (λy : Bool → Bool.y(y true)) (λx : Bool.x)
-   (λx : Bool.x)((λx : Bool.x) true)
-   (λx : Bool.x) true
-   true
+3.
+```
+(λx : Bool.λy : Bool → Bool.y(yx)) ((λz : Bool.true)false)(λx : Bool.x)
+(λx : Bool.λy : Bool → Bool.y(yx)) true (λx : Bool.x)
+(λy : Bool → Bool.y(y true)) (λx : Bool.x)
+(λx : Bool.x)((λx : Bool.x) true)
+(λx : Bool.x) true
+true
+```
 
-4. (λx : Bool → Bool → Bool.λy : Bool → Bool.λz : Bool.xz(yz)) (λs : Bool.λt : Bool.s) (λu : Bool.u)w
-   (λy : Bool → Bool.λz : Bool.(λs : Bool.λt : Bool.s)z(yz)) (λu : Bool.u)w
-   (λz : Bool.(λs : Bool.λt : Bool.s)z((λu : Bool.u)z)) w
-   (λs : Bool.λt : Bool.s) w ((λu : Bool.u) w)
-   (λt : Bool.w) ((λu : Bool.u) w)
-   (λt : Bool.w) w
+4.
+```
+(λx : Bool → Bool → Bool.λy : Bool → Bool.λz : Bool.xz(yz)) (λs : Bool.λt : Bool.s) (λu : Bool.u)w
+(λy : Bool → Bool.λz : Bool.(λs : Bool.λt : Bool.s)z(yz)) (λu : Bool.u)w
+(λz : Bool.(λs : Bool.λt : Bool.s)z((λu : Bool.u)z)) w
+(λs : Bool.λt : Bool.s) w ((λu : Bool.u) w)
+(λt : Bool.w) ((λu : Bool.u) w)
+(λt : Bool.w) w
+```
 
 ¿Qué pasaría si en el punto 4 dijese true o false en lugar de w?
 -> terminaría en true o false.
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
----------------------------- Consultar para abajo ----------------------------
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 ####Ejercicio 6
 1. No, podría ser D = P, o D = Q, siendo P o Q, true o false.
