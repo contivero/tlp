@@ -1,0 +1,320 @@
+1. W(λz. if z then 0 else succ(0)) = ∅  ⊳ λz:Bool. if z then 0 else succ(0) : Bool → Nat
+   │  
+   │   S = MGU({t = Bool})
+   │  
+   └─ W(if z then 0 else succ(0)) = ∅ ⊳ if z then 0 else succ(0) : Nat
+      │  
+      │   S = MGU({a ≗ Bool, Nat ≗ Nat}) = {a := Bool, Nat := Nat}
+      │  
+      ├── W(z) = {z : a} ⊳ z : a
+      ├── W(0) = ∅ ⊳ 0 : Nat
+      └── W(succ(0)) = ∅ ⊳ succ(0): Nat
+          │
+          │   S = MGU({Nat ≗  Nat}) = {Nat := Nat}
+          │
+          └── W(0) = ∅ ⊳ 0 : Nat
+
+2. W(λx.λy. if x then y else succ(x)) =
+   │  
+   │   S = MGU({})
+   │  
+   └─ W(λy. if x then y else succ(x)) =
+      │  
+      │   S = MGU({})
+      │  
+      └── W(if x then y else succ(x)) =
+          │  
+          │   S = MGU({c ≗ Bool, b ≗ Nat, c = Nat})             <------- Absurdo: c no es unificable con Bool y Nat
+          │  
+          ├── W(x) = {x : c} ⊳ x : c
+          ├── W(y) = {y : b} ⊳ y : b
+          └── W(succ(x)) = {x : Nat} ⊳ succ(x) : Nat
+              │
+              │   S = MGU({a ≗ Nat})
+              │
+              └── W(x) = {x : a} ⊳ x : a
+
+3. W(λx. if isZero(x) then x else (if x then x else x)) =
+   │  
+   │   S =
+   │  
+   └─ W(if isZero(x) then x else (if x then x else x)) =
+      │  
+      │   S = MGU({d ≗ Bool, Nat ≗ Bool})                       <------- Absurdo, Nat no es unificable con Bool
+      │  
+      ├── W(isZero(x)) = {x : Nat} ⊳ isZero(x) : Bool
+      │   │  
+      │   │  S = MGU({e ≗ Nat}) = {e := Nat}
+      │   │ 
+      │   └─W(x) = {x : e} ⊳ x : e
+      ├── W(x) = {x : d} ⊳ x : d
+      └── W(if x then x else x) = {x : Bool} ⊳ if x then x else x : Bool
+          │
+          │   S = MGU({c ≗ b, a ≗ Bool, a ≗ c, a ≗ b}) = {a := Bool, b := Bool, c := Bool}
+          │
+          ├── W(x) = {x : a} ⊳ x : a
+          ├── W(x) = {y : b} ⊳ x : b
+          └── W(x) = {x : c} ⊳ x : c
+
+4. W(λx.λy. if x then y else succ(x)) =
+   │  
+   │   S =
+   │  
+   └─ W(λy. if x then y else succ(x)) =
+      │  
+      │  S =
+      │  
+      └── W(if x then y else succ(x)) =
+          │
+          │   S = MGU({ b ≗ Nat, c ≗  Bool, c ≗ Nat})                    <--------- c no es unificable con Bool y Nat simultaneamente
+          │
+          ├── W(x) = {x : c} ⊳ x : c
+          ├── W(y) = {y : b} ⊳ y : b
+          └── W(succ(x)) = {x : Nat} ⊳ succ(x) : Nat
+              │  
+              │  S = MGU({a ≗ Nat}) = {a := Nat}
+              │  
+              └── W(x) = {x : a} ⊳ x : a
+
+
+5. Tipable, de tipo Nat:
+
+   W(if True then (λx. 0) 0 else (λx. 0) False) = ∅ ⊳ if True then (λx. 0) 0 else (λx. 0) False : Nat
+   │  
+   │   S = MGU({Nat ≗ Nat, Bool ≗ Bool}) = {Nat := Nat, Bool := Bool}
+   │  
+   ├── W(True) = ∅ ⊳ True : Bool
+   ├── W((λx. 0) 0) =  ∅ ⊳ (λx. 0) 0 : Nat
+   │   │  
+   │   │  S = MGU({s → Nat ≗ Nat → t}) = {s := Nat, t := Nat}         <######### El t de acá de donde sale? Siguiendo las filminas necesito una variable fresca,
+   │   │                                                                           por eso t, pero pareciera surgir de la nada  
+   │   ├── W((λx. 0)) = ∅ ⊳ λx : s. 0 : s → Nat
+   │   │   │  
+   │   │   └── W(0) = ∅ ⊳ 0 : Nat
+   │   └── W(0) = ∅ ⊳ 0 : Nat
+   └── W((λx. 0) False) = ∅ ⊳ (λx. 0) False : Nat
+       │  
+       │  S = MGU({a → Nat ≗ Bool → p}) = {a := Bool, p := Nat}
+       │  
+       ├── W((λx. 0)) = ∅ ⊳ λx : a. 0 : a → Nat
+       │   │  
+       │   └── W(0) = ∅ ⊳ 0 : Nat
+       └── W(False) = ∅ ⊳ False : Bool
+
+6. W((λf. if True then f 0 else f False) (λx. 0))
+   │  
+   │   S = MGU(
+   │  
+   ├── W(λf. if True then f 0 else f False) =
+   │   └── W(if True then f 0 else f False) =
+   │       │  
+   │       │  S = MGU({ Bool ≗ Bool, Nat → s ≗ Bool → t, s ≗ t}) =            <---- No existe MGU ya que Nat no es unificable con Bool
+   │       │  
+   │       ├── W(True) = ∅ ⊳ True : Bool
+   │       ├── W(f 0) =  {f : Nat → s} ⊳ f 0 : s
+   │       │   │  
+   │       │   │  S = MGU({b ≗ Nat → s}) = { b := Nat → s}
+   │       │   │
+   │       │   ├── W(f) = {f : b} ⊳  f : b
+   │       │   └── W(0) = ∅ ⊳ 0 : Nat
+   │       └── W(f False) = {f : Bool → t} ⊳ f False : t
+   │           │  
+   │           │  S = MGU({a ≗ Bool → t}) = {a := Bool → t}
+   │           │
+   │           ├── W(f) = {f : a} ⊳  f : a
+   │           └── W(False) = ∅ ⊳ False : Bool
+   └── W(λx. 0) = ∅ ⊳ λx:c. 0 : c → Nat
+       └── W(0) = ∅ ⊳ 0 : Nat
+
+7. W(λx.λy.λz. if z then y else succ(x)) = ∅ ⊳ λx:Nat. λy:Nat. λz:Bool. if z then y else succ(x) : Nat -> Nat -> Bool -> Nat
+   │  
+   └── W(λy.λz. if z then y else succ(x)) = {x : Nat} ⊳ λy:Nat. λz:Bool. if z then y else succ(x)) : Nat -> Bool -> Nat
+       │
+       └── W(λz. if z then y else succ(x)) = {x : Nat, y : Nat} ⊳ λz:Bool. if z then y else succ(x) : Bool -> Nat
+           │
+           └── W(if z then y else succ(x)) = {x : Nat, y : Nat, z : Bool} ⊳ if z then y else succ(x) : Nat
+               │
+               │  S = MGU({c ≗ Bool, b ≗ Nat}) = {c := Bool, b := Nat}
+               │
+               ├── W(z) = {z : c} ⊳ z : c
+               ├── W(y) = {y : b} ⊳ y : b
+               └── W(succ(x)) = {x : Nat} ⊳ succ(x) : Nat
+                   │
+                   │  S = MGU({a ≗ Nat}) = {a := Nat}
+                   │
+                   └── W(x) = {x : a} ⊳ x : a
+
+TODO TERMINAR
+8. W(ﬁx (λx. pred(x))) =
+   │  
+   │  S = MGU({})
+   │  
+   └── W(λx. pred(x)) = {x : Nat} ⊳ λy:Nat. λz:Bool. if z then y else succ(x)) : Nat -> Bool -> Nat
+       │
+       └── W(pred(x)) =
+
+
+Ejercicio 2
+
+1. W(λx. λy. λz. (z x) y z)
+   │  
+   └── W(λy. λz. (z x) y z)
+       │
+       └── W(λz. (z x) y z)
+           │
+           └── W((z x) y z)
+               │
+               │  S = MGU({s ≗ a -> r, a ≗ c -> b -> s})      <--------- No existe MGU
+               │
+               ├── W((z x) y) = {z : c -> b -> s, x : c, y : b} ⊳ (z x) y : s
+               │   │
+               │   │   S = MGU({t ≗ b -> s}) = {t := b -> s}
+               │   │
+               │   ├── W(z x) = {z : c -> t, x : c} ⊳ z x : t
+               │   │   │
+               │   │   │  S = MGU({d ≗ c -> t}) = {d := c -> t}
+               │   │   │
+               │   │   ├── W(z) = {z : d}  ⊳ z : d
+               │   │   └── W(x) = {x : c} ⊳ x : c
+               │   └── W(y) = {y : b} ⊳ y : b
+               └── W(z) = {z : a}  ⊳ z : a
+
+2. W(λx. x (w (λy.w y)))
+   └── W(x (w (λy.w y)))
+       ├── W(x)
+       └── W(w (λy.w y))
+           │
+           │   S = MGU({c ≗ a -> t, c ≗ a -> t -> s}) =      <------- No existe forma de unificar esto
+           │
+           ├── W(w) = {w : c}  ⊳ w : c
+           └── W(λy.w y) = {w : a -> t} ⊳ λy:a. w y : a -> t
+               │  
+               └── W(w y) = {w : a -> t, y : a} ⊳ w y : t
+                   │
+                   │   S = MGU({b ≗ a -> t}) = {b := a -> t}
+                   │
+                   ├── W(w) = {w : b} ⊳ w : b
+                   └── W(y) = {y : a} ⊳ y : a
+
+3. W((λz.λx. x (z (λy. z))) True)
+   ├── W(True) = ∅ ⊳ True : Bool
+   └── W(λz.λx. x (z (λy. z))) =
+       └── W(λx. x (z (λy. z))) =
+           └── W(x (z (λy. z))) =
+               │
+               ├── W(x) =
+               └── W(z (λy. z)) =
+                   │
+                   │   S = MGU({a = b, b = (c -> a) -> t })   <----- No puedo unificar esto
+                   │
+                   ├── W(z) = {z : b} ⊳ z : b
+                   └── W(λy. z) = {z : a} ⊳ λy:c. z : c -> a
+                       └── W(z) = {z : a} ⊳ z : a
+
+Ejercicio 3
+
+Either type type
+
+Expresiones de tipo:
+σ ::= ... | Either σ τ
+
+Términos:
+M ::= ... | Left_τ M | Right_σ M | case M of {Left_τ  x -> M; Right_σ x -> M}
+
+Reglas de tipado:
+
+Γ ⊳ M : σ
+-------------------------
+Γ ⊳ Left_τ M : Either σ τ
+
+Γ ⊳ M : τ
+-------------------------
+Γ ⊳ Right_σ M : Either σ τ
+
+Γ ⊳ M : Either σ τ      Γ,x:σ  ⊳ P : T      Γ,y:τ ⊳ Q : T
+---------------------------------------------------------
+Γ ⊳ case M of {Left_τ x ---> P; Right_σ y ---> Q} : T
+
+Semántica operacional:
+
+       M ------> M'
+--------------------------
+Left_τ M ------> Left_τ M'
+
+         M ------> M'
+-----------------------------
+Right_σ  M ------> Right_σ M'
+
+                   M ------> M'
+----------------------------------------------
+case M of {Left_τ x ---> P; Right_σ y ---> Q}
+    ------>
+case M' of {Left_τ x ---> P; Right_σ y ---> Q}
+
+
+                            M ------> M'
+------------------------------------------------------------------------
+case (Left_τ v) of {Left_τ x ---> P; Right_σ y ---> Q} ------> P{x := v}
+
+                            M ------> M'
+-------------------------------------------------------------------------
+case (Right_σ v) of {Left_τ x ---> P; Right_σ y ---> Q} ------> Q{y := v}
+
+Reglas de inferencia:
+TODO
+
+Caso Maybe type:
+
+Expresiones de tipo:
+σ ::= ... | Maybe σ
+
+Términos:
+M ::= ... | Nothing_σ | Just M | case M of {Nothing_σ ---> P; Just y ---> Q}
+
+Reglas de tipado:
+
+-----------------------
+Γ ⊳ Nothing_σ : Maybe σ
+
+     Γ ⊳ M : σ
+--------------------
+Γ ⊳ Just M : Maybe σ
+
+Γ ⊳ M : Maybe σ     Γ ⊳ P : T     Γ,x:σ ⊳ Q : T
+----------------------------------------------------
+Γ ⊳  case M of {Nothing_σ ---> P; Just x ---> Q} : T
+
+Semántica operacional:
+
+     M ------> M'
+----------------------
+Just M ------> Just M'
+
+                 M ------> M'
+--------------------------------------------
+case M of {Nothing_σ ---> P; Just x ---> Q}
+     ------>
+case M' of {Nothing_σ ---> P; Just x ---> Q}
+
+                    M ------> M'
+-------------------------------------------------------------
+case Nothing_σ of {Nothing_σ ---> P; Just x ---> Q} ------> P
+
+                    M ------> M'
+--------------------------------------------------------------------
+case (Just v) of {Nothing_σ ---> P; Just x ---> Q} ------> Q{x := v}
+
+Reglas de inferencia:
+TODO
+
+W(a)
+W(Just a) = ∅ ⊳ Just a : Maybe t
+W(Nothing) = ∅ ⊳ Nothing : Maybe a
+
+Ejercicio 4
+
+σ ::= ... | Vacio
+
+M ::= ... | error
+
+

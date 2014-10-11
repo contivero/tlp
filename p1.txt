@@ -1,4 +1,4 @@
-####Ejercicio 1
+Ejercicio 1
 
 1. ux(yz)(λv.vy)
    ((ux)(yz))(λv.(vy))
@@ -27,109 +27,93 @@
    x no se aplica a lo que evalua (yz), sino que se aplica lo que evalue
    (ux) a (yz)
 
-####Ejercicio 2
+Ejercicio 2
 if (λx:Bool.x) then true else false
 
-####Ejercicio 3
+Ejercicio 3
 TODO
 
 1. (λy : σ.x(λx : τ.x)){x ← (λy : ρ.xy)}
 
 2. (y(λv : σ.xv)){x ← (λy : τ.vy)}
 
-####Ejercicio 5
+Ejercicio 5
 We use call-by-value !
 
 1.
-```
 (λx : Bool.λy : Bool → Bool.yx) true(λx : Bool.x)
 (λy : Bool → Bool.y true) (λx : Bool.x)
 (λx : Bool.x) true
 true
-```
 
 2.
-```
 (λx : Bool.λy : Bool → Bool.y(yx)) false(λx : Bool.x)
 (λy : Bool → Bool.y(y false)) (λx : Bool.x)
 (λx : Bool.x)((λx : Bool.x) false)
 (λx : Bool.x) false
 false
-```
 
 3.
-```
 (λx : Bool.λy : Bool → Bool.y(yx)) ((λz : Bool.true)false)(λx : Bool.x)
 (λx : Bool.λy : Bool → Bool.y(yx)) true (λx : Bool.x)
 (λy : Bool → Bool.y(y true)) (λx : Bool.x)
 (λx : Bool.x)((λx : Bool.x) true)
 (λx : Bool.x) true
 true
-```
 
 4.
-```
 (λx : Bool → Bool → Bool.λy : Bool → Bool.λz : Bool.xz(yz)) (λs : Bool.λt : Bool.s) (λu : Bool.u)w
 (λy : Bool → Bool.λz : Bool.(λs : Bool.λt : Bool.s)z(yz)) (λu : Bool.u)w
 (λz : Bool.(λs : Bool.λt : Bool.s)z((λu : Bool.u)z)) w
 (λs : Bool.λt : Bool.s) w ((λu : Bool.u) w)
 (λt : Bool.w) ((λu : Bool.u) w)
 (λt : Bool.w) w
-```
 
 ¿Qué pasaría si en el punto 4 dijese true o false en lugar de w?
 ⋅⋅⋅Terminaría en true o false.
 
-####Ejercicio 6
+Ejercicio 6
 1. No, podría ser D = P, o D = Q, siendo P o Q, true o false.
 
 2. No, nunca reduce P y Q antes de evaluar M.
 
-####Ejercicio 7
+Ejercicio 7
 1. No, por ejemplo:
-```
 suc(pred(0)) = suc(0) = 1
 pred(suc(0)) = 0
-```
 
 2. No, por ejemplo
-```
 isZero(suc(True))
-```
 Vale para todo M = 0 | suc M
 
 3. Para los M ∈ {0, suc(0)}
 
-####Ejercicio 8
-```
+Ejercicio 8
 λx.if iszero(pred(pred(pred x)))
       then (if iszero(pred(pred x)) then false else true)
       else true
-```
 
-####Ejercicio 9
+Ejercicio 9
 
-####Ejercicio 10
+Ejercicio 10
 
-####Ejercicio 11
+Ejercicio 11
 TODO: PREGUNTAR
 
-####Ejercicio 12
-```
+Ejercicio 12
 not = λx : Bool. if x then false else true
 and = λx : Bool.λy : Bool. if x then (if y then true else false) else false
 or  = λx : Bool.λy : Bool. if x then true else (if y then true else false)
 xor = λx : Bool.λy : Bool. if x then (if y then false else true) else y
-```
 
-####Ejercicio 13
+Ejercicio 13
 
-####Ejercicio 14
+Ejercicio 14
 application and let change only
 
-####Ejercicio 15
+Ejercicio 15
 
-####Ejercicio 16
+Ejercicio 16
 Probablemente necesito las reglas de los ejercicios anteriores para poder
 definir si esta en forma normal o no!
 1. (λx : Bool.λy : Bool → Bool.yx) true(λx : Bool.x)
@@ -140,17 +124,14 @@ definir si esta en forma normal o no!
 
 4. (λx : Bool → Bool → Bool.λy : Bool → Bool.λz : Bool.xz(yz)) (λs : Bool.λt : Bool.s) (λu : Bool.u)w
 
-####Ejercicio 17
+Ejercicio 17
 1.
-```
      ✓
 ------------[T-Var]
 Γ ⊳ x : Bool        Γ ⊳ x : Bool        Γ ⊳ y : Bool
 ---------------------------------------------------- [T-If]
 Γ = {x : Bool, y : Bool} ⊳ if x then x else y : Bool
-```
 2.
-```
       ✓                          ✓
 -------------------[T-Var] ------------[T-Var]
 Γ ⊳ x : Bool → Bool        Γ ⊳ y : Bool
@@ -158,10 +139,8 @@ definir si esta en forma normal o no!
 Γ ⊳ xy : Bool                              Γ ⊳ y : Bool      Γ ⊳ xy : Bool
 --------------------------------------------------------------------------[T-If]
     Γ = {x : Bool → Bool, y : Bool} ⊳  if xy then y else xy : Bool
-```
-####Ejercicio 18
+Ejercicio 18
 1.
-```
         ✓                     ✓                   ✓
 -----------------[T-Var]  ---------[T-Var]  -------------[T-Var]
 Γ ⊳ x : σ → τ → ρ         Γ ⊳ z : σ         Γ ⊳ y : σ → τ      Γ ⊳ z : σ
@@ -175,9 +154,7 @@ definir si esta en forma normal o no!
 {x : σ → τ → ρ} ⊳ λy : σ → τ.λz : σ.xz(yz)
 ---------------------------------------------[T-Abs]
 ⊳ λx : σ → τ → ρ.λy : σ → τ.λz : σ.xz(yz)
-```
 2.
-```
          ✓
 ------------------[T-Var]
 {x : σ, y : τ} ⊳ x
@@ -185,29 +162,43 @@ definir si esta en forma normal o no!
 {x : σ} ⊳ λy : τ.x
 ------------------[T-Abs]
 ⊳ λx : σ.λy : τ.x
-```
 3.
-```
      ✓
 -----------[T-Var]
 {x : σ} ⊳ x
 ------------------[T-Abs]
 ⊳ λx : σ.x
-```
 
-####Ejercicio 19
+Ejercicio 19
 σ : Nat → Nat
 τ : Nat
 
-####Ejercicio 20
+Ejercicio 20
 1. {x : Bool} ⊳ x : Bool
    {x : Nat}  ⊳ x : Nat
 
+2. Γ = {x : Bool} ⊳ if x then x else x : Bool ---> Γ ⊳ x : Bool
+   Γ' = {x : Nat} ⊳ x : Nat
+
+Ejercicio 21
+Supongamos que existen gamma y sigma tal que Γ ⊳ xx : σ
+
+Γ ⊳ x : σ → τ    Γ ⊳ x : σ
+--------------------------[T-App]
+        Γ ⊳ xx : τ
+
+Pero para esto sería necesario un tipo σ = σ → τ, y tal tipo no existe.
+¿Qué conclusiones puede sacarse de esto? --> TODO
+
+
+Ejercicio 22
+1. Si M tiene tipo Nat, a lo que evalua en un paso tambien tiene que tener tipo
+   Nat. Si a eso le aplico suc o pred, por las reglas de tipado de ambas
+   funciones, siguen teniendo tipo Nat. Preguntar y escribirlo bien! TODO
+
 2. TODO
 
-####Ejercicio 21
-####Ejercicio 22
-####Ejercicio 23
+Ejercicio 23
 1. Falso
 
    Γ . M : Bool y Γ . N : Bool, pero no existe τ tal que Γ . M N: τ
@@ -216,17 +207,99 @@ definir si esta en forma normal o no!
 
 2. Verdadero, basta con tomar σ = τ.
 
-####Ejercicio 24
-```
-apply = λf : σ → σ.λx : σ. f x
+Ejercicio 24
+    No hay que hacerlo
+
+Ejercicio 25
+1. apply = λf : σ → τ.λx : σ. f x
+   mult (se puede usar * al final ! darlo como que esta en el lenguaje)
+
+2. Regla de tipado:
 
 Γ ⊳ n : Nat      Γ ⊳ m : Nat
 ----------------------------
     Γ ⊳ mult n m : Nat
-```
 
-####Ejercicio 25
-####Ejercicio 26
-####Ejercicio 27
-####Ejercicio 28
-####Ejercicio 29
+  Regla de reducción:
+  TODO
+
+3. TODO (no entiendo la diferencia con el ejercicio 12...)
+
+Ejercicio 26
+
+Expresiones de tipo:
+σ ::= nat | bool | σ → σ | [σ]
+
+Términos:
+M ::= ... |  nil_σ  | M :: N | case_σ M of { nil -> P | h :: t -> Q }
+
+Sistema de tipado (reglas y axiomas de tipado):
+
+                   Γ ⊳ M : σ     Γ ⊳ N : [σ]
+---------------    -------------------------
+Γ ⊳ nil_σ : [σ]        Γ ⊳ M :: N : [σ]
+
+Γ ⊳ M : [σ]         Γ ⊳ P : τ         Γ, h:σ, t:[σ]⊳ Q : τ
+-----------------------------------------------
+Γ ⊳ case M of { nil -> P | h :: t -> Q } : τ
+
+Semántica operacional:
+
+     M --------> M'
+------------------------
+M :: N --------> M' :: N
+
+     N --------> N'
+------------------------
+V :: N --------> V :: N'
+
+                                     M --------> M'
+----------------------------------------------------------------------------------------
+case_σ M of { nil -> P | h :: t -> Q } --------> case_σ M' of { nil -> P | h :: t -> Q }
+
+case_σ nil_σ of { nil -> P | h :: t -> Q } --------> P
+case_σ (V :: W) of { nil -> P | h :: t -> Q } --------> Q{h := M}{t := N}
+
+Ejercicio 27
+
+Expresiones de tipo:
+σ ::= ... | {σ1,...,σn} → τ
+
+Términos:
+M ::= ... | μx1 : σ1,...,xn : σn. M | M #i N
+
+1. Reglas de tipado:
+
+Γ,x1 : σ1,...,xn : σn ⊳ M : τ
+---------------------------------------------[T-Abs]
+Γ ⊳ μx1 : σ1,...,xn : σn. M : {σ1,...,σn} → τ
+
+
+Γ ⊳ M : {σ1} → τ     Γ ⊳ N : σ1
+--------------------------------------[T-App]
+              Γ ⊳ M #1 N : τ
+
+Γ ⊳ M : {σ1,...,σn} → τ   1 <= i <= n   n > 1     Γ ⊳ N : σi
+-----------------------------------------------------------[T-App]
+              Γ ⊳ M #i N : {σ1,...,σn}\{σi} → τ
+
+2. V ::= ... | μx1 : σ1,...,xn : σn. M
+
+3. Escribir lo tipico de LC como con mus! TODO
+
+Ejercicio 28
+
+M ::= ... | pack(M)
+
+1. Reglas de tipado:
+
+Γ ⊳ M : σ
+---------------[T-pack]
+Γ ⊳ pack(M) : σ
+
+
+Ejercicio 29
+1.
+2.
+3.
+4.
