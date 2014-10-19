@@ -305,11 +305,21 @@ case Nothing_σ of {Nothing_σ ---> P; Just x ---> Q} ------> P
 case (Just v) of {Nothing_σ ---> P; Just x ---> Q} ------> Q{x := v}
 
 Reglas de inferencia:
-TODO
+W(Nothing) = ∅ ⊳ Nothing_s : Maybe s
+W(Just u) = Γ ⊳ Just u : Maybe ρ
+└─ W(u) = Γ ⊳ u : ρ
 
-W(a)
-W(Just a) = ∅ ⊳ Just a : Maybe t
-W(Nothing) = ∅ ⊳ Nothing : Maybe a
+TODO ver bien el contexto de esto...
+W(case u of {Nothing_s --> V; Just x --> W}) = SΓ1 U SΓ2 U SΓ3 ⊳ S(case M1 of Nothing --> M2; Just x --> M3}) : Sσ2
+│  
+│   S = MGU({σ1 ≗ Maybe τ, σ2 ≗ σ3}
+│         ∪ {ρ1 ≗ ρ2 | z:ρ1 ∈ Γi ^ z:ρ2 ∈ Γj, i ≠ j, 1 <= i,j <= 3})
+│  
+├── W(u) = Γ1 ⊳ M1 : σ1
+├── W(V) = Γ2 ⊳ M2 : σ2
+└── W(W) = Γ3 ⊳ M3 : σ3
+    τ = σ   if x:σ ∈ Γ3
+        s   otherwise
 
 Ejercicio 4
 

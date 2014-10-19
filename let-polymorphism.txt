@@ -1,0 +1,82 @@
+1.i ) let g: ∀s. s -> Nat = Λs.λx:s.4 in <g Bool True, g Nat 3>
+
+  ____
+  \  |
+   \ |
+    \|                               Γ ⊳ g : ∀s. s -> Nat             Γ ⊳ g : ∀s. s -> Nat
+-------------                        --------------------[T-TApp]     ----------------------[T-TApp]
+x:s ⊳ 4 : Nat                        Γ ⊳ g Bool : Bool -> Nat         Γ ⊳ g Nat : Nat -> Nat
+---------------------[T-Abs]         ---------------------            ----------------------
+∅ ⊳ λx:s.4 : s -> Nat                Γ ⊳ g Bool True : Nat            Γ ⊳ g Nat 3 : Nat
+----------------------------[T-TAbs] -------------------------------------------------------
+∅ ⊳ Λs.λx:s.4 : ∀s. s -> Nat         ∅ ⊳ g:∀s. s -> Nat ⊳ <g Bool True, g Nat 3> : Nat x Nat
+--------------------------------------------------------------------------------------------
+∅ ⊳ let g: ∀s. s -> Nat = Λs.λx:s.4 in ⟨g Bool True, g Nat 3⟩ : Nat x Nat
+
+
+1.ii) let g: ∀s. s -> s = Λs.λx:s.x in <g Bool True, g Nat 3>
+
+
+                                     Γ ⊳ g : ∀s. s -> s               Γ ⊳ g : ∀s. s -> s
+-----------[T-Var]                   --------------------[T-TApp]     ----------------------[T-TApp]
+x:s ⊳ x : s                          Γ ⊳ g Bool : Bool -> Bool        Γ ⊳ g Nat : Nat -> Nat        <----TODO: No tendría que explicitar que uso [T-App] y decir que True:Bool y 3:Nat ???
+---------------------[T-Abs]         ---------------------            ----------------------
+∅ ⊳ λx:s.x : s -> s                  Γ ⊳ g Bool True : Bool           Γ ⊳ g Nat 3 : Nat
+----------------------------[T-TAbs] -------------------------------------------------------
+∅ ⊳ Λs.λx:s.x : ∀s. s -> s           Γ = g:∀s. s -> s ⊳ <g Bool True, g Nat 3> : Bool x Nat
+--------------------------------------------------------------------------------------------
+∅ ⊳ let g: ∀s. s -> s = Λs.λx:s.x in ⟨g Bool True, g Nat 3⟩ : Bool x Nat
+
+2) ??? TODO
+
+3.i ) let g: ∀s. s -> Nat = Λs.λx:s.4 in <g True, g 3>
+
+                                Γ(g) = ∀s. s -> Nat        Γ(g) = ∀s. s -> s
+                                -------------------[T-Var] ------------------
+                                Γ ⊳ g : Bool -> Nat        Γ ⊳ g : Nat -> Nat
+                                -------------------        ------------------
+x:s ⊳ 4 : Nat                   Γ ⊳ g True : Nat           Γ ⊳ g 3 : Nat
+----------------------------    ----------------------------------------------
+∅ ⊳ Λs.λx:s.4 : ∀s. s -> Nat    Γ = g:∀s. s -> Nat ⊳ <g True, g 3> : Nat x Nat
+---------------------------------------------------------------------------
+∅ ⊳ let g: ∀s. s -> Nat = Λs.λx:s.4 in <g True, g 3> : Nat x Nat
+
+3.ii) TODO
+
+4) σ1 = Bool -> Bool
+   σ2 = Nat -> Nat
+
+                         (s -> s){s := Bool}
+                         -------------------------------[T-Var]
+∅ ⊳ λz:s. z : s -> s     x:∀s. s -> s ⊳ x : Bool -> Bool
+--------------------------------------------------------
+∅ ⊳ let x:∀s. s -> s  = λz:s. z in x : Bool -> Bool
+
+                         (s -> s){s := Nat}
+                         -------------------------------[T-Var]
+∅ ⊳ λz:s. z : s -> s     x:∀s. s -> s ⊳ x : Nat -> Nat
+--------------------------------------------------------
+∅ ⊳ let x:∀s. s -> s  = λz:s. z in x : Nat -> Nat
+
+5) No hace falta hacerlo
+
+6) LEER PAGINA 26 (filminas) algoritmo de inferencia para ML2
+  I. let i = λx.x in i i
+    W(let i = λx.x in i i, ∅) =  ∅ ⊳ let i = λx.x in i i : t -> t
+    │  
+    ├─ W(λx.x, ∅) = ∅ ⊳ λx.x : s -> s 
+    │  │  
+    │  └─ W(x, ∅) = {x : s} ⊳ x : s 
+    └─ W(i i, E = {i := <∅ , s -> s>}) = ∅ ⊳ i i : t -> t
+       ├─ W(i, E) = ∅ ⊳ i : s -> s 
+       └─ W(i, E) = ∅ ⊳ i : t -> t
+
+   S = MGU({ s -> s = (t -> t) -> r })    r being a fresh variable
+     = {s := t -> t, r := t -> t}
+    
+ II. TODO 
+    let g = ∀s.s -> Nat = Λs.λx:s.4 in <g True, g 3>
+III. TODO
+    λx.let x = λz. z x in <x succ, x not>
+
+7) TODO (No supimos resolverlo durante clase :| )

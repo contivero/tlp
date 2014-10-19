@@ -292,14 +292,58 @@ Ejercicio 28
 M ::= ... | pack(M)
 
 1. Reglas de tipado:
-
 Γ ⊳ M : σ
 ---------------[T-pack]
 Γ ⊳ pack(M) : σ
 
 
 Ejercicio 29
+
 1.
+head :: [s] -> s
+head = λx:[s]. case x of {nil -> _|_s                   // Nota: Uso _|_s para denotar bottom de tipo s
+                          h :: t -> h}
 2.
+idea: "x :: iterate f (f x)"
+
+iterate :: (σ -> σ) -> σ -> [σ]
+iterate = fix (λi:(σ -> σ) -> σ -> [σ].
+                λf.
+                 λx. x :: i f (f x))
+
 3.
+informalmente: zip xs []         = []
+               zip [] ys         = []
+               zip (x:xs) (y:ys) = (x,y) :: zip xs ys
+
+zip :: [r] -> [s] -> [r x s]
+zip = fix (λz:[r] -> [s] -> [r x s].
+           λxs:[r].λys:[s]. case ys of {
+                            nil -> []
+                                h :: t -> case xs of {
+                                               nil -> []
+                                               h' :: t' -> (h,h') :: z t' t
+                                }
+                            }
+           )
 4.
+informalmente: take :: Nat -> [s] -> [s]
+               take 0 xs         = []
+               take (n+1) []     = []
+               take (n+1) (x:xs) = x : take n xs
+
+take = fix (
+        λt:Nat -> [s] -> [s]
+        λn:Nat. λxs:[s]. 
+        if isZero(n)
+           then []
+           else case xs of {
+               nil -> []
+               h :: y -> h :: t (pred n) y
+           }
+        )
+
+Posibles ejercicios adicionales:
+drop
+dropwhile
+takewhile

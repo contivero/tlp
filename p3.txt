@@ -1,18 +1,99 @@
 1) 
 
-2)  I. Falso: por ejemplo si tomamos T = Nat, Nat no es suptipo de nada.
+2)  I. Falso: por ejemplo si tomamos T = Nat, Nat no es subtipo de nada.
        Solo es cierto si definimos el tipo Top, del cual todos los tipos son
        subtipo por definición.
-   II. Falso
-  III. y IV. dependen de las respuestas anteriores
+   II. (Ejercicio 15.2.4 del TPL de Pierce)
+       No, si hubiera, tendría que ser o una función (arrow) o un record
+       (obviamente no puede ser Top). Pero un tipo record no sería subtipo de
+       ninguno de los tipos de función (arrow types), y vice versa.
+       Solo sería cierto si definimos el tipo Bot (Bottom), discutida en
+       15.4 del TPL de Pierce.
+  III. Falso.
+  IV. (Nuevamente ejercicio 15.2.4 del TPL de Pierce)
+      No. Si hubiera tal tipo flecha T1 -> T2, su tipo de dominio T1 debería
+      ser subtipo de todo otro tipo S1; pero acabamos de ver que no es posible
+      (ejercicio I.)
 
 3) No existen Γ,σ tal que Γ ⊳ x x : σ  es derivable en lambda cálculo simple tipado,
-   pero si en lambda cálculo con subtipado: Γ = {x : Top -> Top}
+   pero si en lambda cálculo con subtipado: Γ = {x : Top → Top}
 
-                        Γ ⊳ x : Top -> Top     Top -> Top <: Top
+                        Γ ⊳ x : Top → Top     Top → Top <: Top
                         ----------------------------------------
- Γ ⊳ x : Top -> Top               Γ ⊳ x : Top
+ Γ ⊳ x : Top → Top               Γ ⊳ x : Top
  ---------------------------------------------------------------    
                         Γ ⊳ x x : Top 
 
 4) I.   (1) T <: S
+
+
+    A <: S  T <: B
+    --------------
+    S -> T <: A -> B
+
+    {x : S, y : T} <: {x : C, y : D}        con S <: C
+                   <: {x : C}                   T <: D
+                   <: {y : D}
+                   <: {}
+
+-------------------------------------------------------
+Contraejemplo:
+    A <: Nat  T <: B
+    --------------
+    Nat -> T <: A -> B
+
+    {x : Nat, y : T} <: {x : Nat, y : B}        con T <: B
+                   <: {x : Nat}
+                   <: {y : B}
+                   <: {}
+
+
+5) f()
+
+9) Ejercicio 18.6.1 del libro de Pierce (Types and programming languages)
+
+DecCounterRep = {get : Unit -> Nat, inc : Unit -> Unit,
+                reset : Unit -> Unit, dec : Unit -> Unit};
+
+decCounterClass :: CounterRep -> ResetDecCounter
+decCounterClass =
+    λr:CounterRep.
+        let super = resetCounterClass r in
+            {get = super.get
+             inc = super.inc
+             reset = super.reset
+             dec = λ_:Unit. r.x := pred(!(r.x))};
+
+newDecCounter :: Unit -> DecCounter
+newResetDecCounter =
+    λ_:Unit. let r = {x = ref 1} in resetDecCounterClass r;
+
+11) Ejercicio 18.7.1 del libro de Pierce (pero usando self, y Unit para crear un
+    "thunk" y poder usar el fix)
+
+BackupCounter2 = {get : Unit -> Nat, inc : Unit -> Unit,
+                  reset : Unit -> Unit, backup : Unit -> Unit,
+                  reset2 : Unit -> Unit, backup2 : Unit -> Unit}
+
+bp2CounterRep = {x : Ref Nat, b : Ref Nat, b2 : Ref Nat};
+
+bp2CounterClass =
+    λr:bp2CounterRep.
+        λself: Unit -> bp2Counter.
+            λ_:Unit.
+                let super = backupCounterClass r self unit in
+                    {get = super.get
+                     inc = super.inc
+                     reset = super.reset
+                     backup = super.backup
+                     reset2 = λ_:Unit. r.x := !(r.b2)
+                     backup2 = λ_:Unit. r.b2 := !(r.x)};
+
+Ejemplo de uso: (nbp2c por newbp2Counter)
+
+    let r = {x = ref a, b = ref 0, b2 = ref 0} in
+        let nbp2c = fix (bp2CounterClass r) unit in
+            nbp2c.inc unit; nbp2c.inc unit;
+            nbp2c.backup unit; nbp2c.inc unit;
+            nbp2c.backup2 unit; nbp2c.reset2 unit;
+            nbp2c.get unit;
