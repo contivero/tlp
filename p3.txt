@@ -1,16 +1,42 @@
-1) 
+1)
+  I. Ejercicio 15.2.1 del TAPL de Pierce
+
+    ------------------------[S-RcdPerm] ---------------------[S-RcdWidth]
+       {x:Nat, y:Nat, z:Nat}            {y:Nat, x:Nat, z:Nat}
+    <: {y:Nat, x:Nat, z:Nat}            <: {y:Nat}
+    ----------------------------------------------------[S-Trans]
+    {x : Nat, y : Nat, z : Nat} <: {y : Nat}
+
+    No es única:
+
+    ------------------------[S-RcdPerm] ---------------------[S-RcdWidth]
+       {x:Nat, y:Nat, z:Nat}            {y:Nat, z:Nat, x:Nat}
+    <: {y:Nat, z:Nat, x:Nat}            <: {y:Nat}
+    ----------------------------------------------------[S-Trans]
+    {x : Nat, y : Nat, z : Nat} <: {y : Nat}
+
+ II.
+    --------------------------[S-RcdWidth]
+    {x : Nat, y : Nat} <: {  }
+
+
+    -----------------[S-RcdWidth]  ----------[S-RcdWidth]
+       {x:Nat, y:Nat}                 {x:Nat}
+    <: {x:Nat}                     <: {  }
+    -----------------------------------------[S-Trans]
+    {x : Nat, y : Nat} <: {  }
 
 2)  I. Falso: por ejemplo si tomamos T = Nat, Nat no es subtipo de nada.
        Solo es cierto si definimos el tipo Top, del cual todos los tipos son
        subtipo por definición.
-   II. (Ejercicio 15.2.4 del TPL de Pierce)
+   II. (Ejercicio 15.2.4 del TAPL de Pierce)
        No, si hubiera, tendría que ser o una función (arrow) o un record
        (obviamente no puede ser Top). Pero un tipo record no sería subtipo de
        ninguno de los tipos de función (arrow types), y vice versa.
        Solo sería cierto si definimos el tipo Bot (Bottom), discutida en
        15.4 del TPL de Pierce.
   III. Falso.
-  IV. (Nuevamente ejercicio 15.2.4 del TPL de Pierce)
+  IV. (Nuevamente ejercicio 15.2.4 del TAPL de Pierce)
       No. Si hubiera tal tipo flecha T1 -> T2, su tipo de dominio T1 debería
       ser subtipo de todo otro tipo S1; pero acabamos de ver que no es posible
       (ejercicio I.)
@@ -21,10 +47,11 @@
                         Γ ⊳ x : Top → Top     Top → Top <: Top
                         ----------------------------------------
  Γ ⊳ x : Top → Top               Γ ⊳ x : Top
- ---------------------------------------------------------------    
-                        Γ ⊳ x x : Top 
+ ---------------------------------------------------------------
+                        Γ ⊳ x x : Top
 
-4) I.   (1) T <: S
+4) I. ?????????? Apuntes de clase
+    (1) T <: S
 
 
     A <: S  T <: B
@@ -49,6 +76,13 @@ Contraejemplo:
 
 
 5) f()
+
+6) TODO COMPLETAR
+
+   Ref S <: Source S
+   Ref S <: Sink S
+   Ref (Ref S) <: Source (Ref S)
+   Ref (Sink S) <: Source (Sink S)
 
 9) Ejercicio 18.6.1 del libro de Pierce (Types and programming languages)
 

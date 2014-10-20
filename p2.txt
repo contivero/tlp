@@ -327,4 +327,19 @@ Ejercicio 4
 
 M ::= ... | error
 
+Habría que ir regla por regla en el algoritmo de inferencia, y dividirlas (como
+si fuera una función partida), diciendo que si se encontró un error, que se
+propague, y sino, que siga la regla original. Por ejemplo:
 
+W(error) = ∅ ⊳ error : Vacio
+
+         / ∅ ⊳ error : Vacio      si M1 = error o M2 = error
+W(U V) =|
+│        \ Regla de siempre       sino
+│        
+├── W(U) = Γ2 ⊳ M2 : σ2
+└── W(V) = Γ3 ⊳ M3 : σ3
+
+... (etc.)
+
+Ejercicio 5

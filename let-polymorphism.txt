@@ -74,8 +74,22 @@ x:s ⊳ 4 : Nat                   Γ ⊳ g True : Nat           Γ ⊳ g 3 : Nat
    S = MGU({ s -> s = (t -> t) -> r })    r being a fresh variable
      = {s := t -> t, r := t -> t}
     
- II. TODO 
-    let g = ∀s.s -> Nat = Λs.λx:s.4 in <g True, g 3>
+ II. TODO: Terminar 
+    let g = λx.4 in <g True, g 3>
+    W(let g = λx.4 in <g True, g 3>, ∅) =  ∅ ⊳ let g = λx.4 in <g True, g 3> : Nat x Nat
+    │  
+    ├─ W(λx.4, ∅) = ∅ ⊳ λx.4 : s -> Nat 
+    │  │  
+    │  └─ W(4, ∅) = ∅ ⊳ 4 : Nat 
+    └─ W(<g True, g 3>, E = {i := <∅ , s -> s>}) = ∅ ⊳ <g True, g 3> : 
+       │  
+       ├─ W(g True, E) = ∅ ⊳ g True : Nat 
+       └─ W(g 3, E) = ∅ ⊳ g 3 : Nat
+          │  
+          │  S = MGU({s = Nat}) = {s := Nat}
+          │  
+          ├─ W(g, E) = ∅ ⊳ i : s -> s 
+          └─ W(3, E) = ∅ ⊳ 3 : Nat
 III. TODO
     λx.let x = λz. z x in <x succ, x not>
 
